@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.xuexitongbackground.mapper.UserMapper">
+
+    <!--实体类属性和数据库表字段创建映射关系，映射的属性：把有下划线改成驼峰的
+        映射关系用于查询语句select，增删改不需要
+    -->
+    <resultMap id="userEntityMap" type="com.example.xuexitongbackground.data.User">
+        <id column="uid" property="uid"/>
+        <result column="no" property="no"/>
+        <result column="is_delete" property="isDelete"/>
+        <result column="created_user" property="createdUser"/>
+        <result column="created_time" property="createdTime"/>
+        <result column="modified_user" property="modifiedUser"/>
+        <result column="modified_time" property="modifiedTime"/>
+    </resultMap>
+
+    <!--插入语句  使用主键自增userGenerateKeys  keyProperty-->
+    <!-- 插入用户数据：Integer insert(User user) -->
+    <insert id="insertUser" useGeneratedKeys="true">
+        insert into user(
+        no,name,password,age,sex,phone,role_id,email,is_delete,
+        created_user, created_time,modified_user,modified_time
+        ) value(
+        #{no},#{name},#{password},#{age},#{sex},#{phone},#{roleId},
+        #{email},#{isDelete},#{createdUser},#{createdTime},#{modifiedUser},#{modifiedTime}
+        )
+    </insert>
+
+    <!-- 根据用户名查询用户数据：User findByUsername(String username) -->
+    <select id="findByUserName" resultMap="userEntityMap">
+        select * from user where name = #{name}
+    </select>
+
+
+</mapper>
