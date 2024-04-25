@@ -4,8 +4,12 @@ import com.example.xuexitongbackground.data.User
 import com.example.xuexitongbackground.result.JsonResult
 import com.example.xuexitongbackground.service.IUserService
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.bind.annotation.*
+import org.springframework.util.StringUtils
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RestController
+import java.text.SimpleDateFormat
 import java.util.*
+
 
 @RestController
 @RequestMapping("/user")
@@ -26,7 +30,20 @@ class UserController : BaseController() {
         if (password != user.password) {
             return JsonResult.error(ERROR, "密码或用户名错误")
         }
-        return JsonResult.success(OK, "用户登录成功",user)
+        if (StringUtils.isEmpty(user.email)) {
+            user.email = "null@qq.com"
+        }
+        if (StringUtils.isEmpty(user.phone)) {
+            user.phone = "1234567"
+        }
+        val currentDate = Date()
+        val sdf = SimpleDateFormat("yyyy-MM-dd")
+        val dateString = sdf.format(currentDate)
+        val date = sdf.parse(dateString)
+        println("date $date")
+        user.createdTime = date
+        user.modifiedTime = date
+        return JsonResult.success(OK, "用户登录成功", user)
     }
 
 
@@ -45,8 +62,13 @@ class UserController : BaseController() {
         user.email = ""
         user.createdUser = userName
         user.modifiedUser = userName
-        user.createdTime = Date()
-        user.modifiedTime = Date()
+        val currentDate = Date()
+        val sdf = SimpleDateFormat("yyyy-MM-dd")
+        val dateString = sdf.format(currentDate)
+        val date = sdf.parse(dateString)
+        println("date $date")
+        user.createdTime = date
+        user.modifiedTime = date
         val result = userService.insertUser(user)
         return if (result == 1)
             JsonResult.success(OK, "用户注册成功", user)

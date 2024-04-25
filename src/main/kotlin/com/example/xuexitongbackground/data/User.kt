@@ -1,5 +1,6 @@
 package com.example.xuexitongbackground.data
 
+import com.alibaba.fastjson.JSON
 import com.fasterxml.jackson.annotation.JsonFormat
 import lombok.AllArgsConstructor
 import lombok.Data
@@ -24,18 +25,17 @@ class User {
     var isDelete = -1
     lateinit var createdUser: String
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     lateinit var createdTime: Date
     lateinit var modifiedUser: String
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     lateinit var modifiedTime: Date
 
     override fun toString(): String {
-        return "{name:$name,password:$password,age:$age,sex:$sex,email:$email,roleId:$roleId,isDelete:$isDelete," +
-                "createdUser:$createdUser,createdTime:$createdTime,modifiedUser:$modifiedUser,modifiedTime:$modifiedTime}"
+        return JSON.toJSONString(this)
     }
 
 }

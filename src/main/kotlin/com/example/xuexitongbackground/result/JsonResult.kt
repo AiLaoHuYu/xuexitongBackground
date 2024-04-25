@@ -36,23 +36,23 @@ class JsonResult<T> : Serializable {
     companion object {
         // 提供一些静态方法用于快速创建不同状态的 JsonResult 对象
         fun success(code: Int, message: String): String {
-            return JSON.toJSONString(JsonResult(code, message, null).toString())
+            return JsonResult(code, message, null).toString()
         }
 
         fun <T> success(code: Int, message: String, data: T): String {
-            return JSON.toJSONString(JsonResult(code, message, data).toString())
+            return JsonResult(code, message, data).toString()
         }
 
         fun error(code: Int, message: String): String {
-            return JSON.toJSONString(JsonResult(code, message, null).toString())
+            return JsonResult(code, message, null).toString()
         }
 
         fun <T> error(code: Int, message: String, data: T): String {
-            return JSON.toJSONString(JsonResult(code, message, data).toString())
+            return JsonResult(code, message, data).toString()
         }
     }
 
     override fun toString(): String {
-        return "{code:$code,message:$message,data:${data.toString()}}"
+        return "{\"result\":\"请求后台成功\",\"from\":\"xuexitongBackground\",\"data\":{\"code\":$code,\"message\":\"$message\",\"entity\":${data.toString()}}}"
     }
 }
